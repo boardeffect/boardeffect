@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    boardeffect (1.0.0)
+    boardeffect (0.0.1)
 
 GEM
   remote: https://rubygems.org/

@@ -1,4 +1,5 @@
 require 'boardeffect/client'
+require 'boardeffect/version'
 
 module BoardEffect
   class Client
