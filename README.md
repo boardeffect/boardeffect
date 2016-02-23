@@ -15,5 +15,5 @@ $ gem install boardeffect
 ```ruby
 require 'boardeffect'
 
-boardeffect = BoardEffect::Client.new(token: 'YOUR PERSONAL ACCESS TOKEN')
+boardeffect = BoardEffect::Client.new(access_token: 'YOUR PERSONAL ACCESS TOKEN', host: 'https://yourportalname.boardeffect.com/')
 ```

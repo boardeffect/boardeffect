@@ -8,14 +8,15 @@ module BoardEffect
   class Client
     def initialize(options = {})
       if options.key?(:access_token)
-        @auth_header, @auth_value = 'Authorization', "token #{options[:access_token]}"
+        @auth_header, @auth_value = 'Authorization', "Token token=#{options[:access_token]}"
       else
         @auth_header, @auth_value = 'X-BoardEffectToken', options.fetch(:token)
       end
 
       @user_agent = options.fetch(:user_agent, 'Ruby BoardEffect::Client')
 
-      @host = (options.key?(:host)) ? options[:host] ? 'boardeffect.local'
+      @host = (options.key?(:host)) ? options[:host] : 'boardeffect.local'
+      @host = @host + "/services"
 
       @http = Net::HTTP.new(@host, Net::HTTP.https_default_port)
 
