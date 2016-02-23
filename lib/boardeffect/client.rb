@@ -16,11 +16,10 @@ module BoardEffect
       @user_agent = options.fetch(:user_agent, 'Ruby BoardEffect::Client')
 
       @host = (options.key?(:host)) ? options[:host] : 'boardeffect.local'
-      @host = @host + "/services"
 
-      @http = Net::HTTP.new(@host, Net::HTTP.https_default_port)
+      @http = Net::HTTP.new(@host)
 
-      @http.use_ssl = true
+      @http.use_ssl = (options.key?(:host)) ? true : false
     end
 
     def get(path, params = nil)
