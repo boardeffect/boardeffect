@@ -6,23 +6,23 @@ module BoardEffect
 
     # Announcements
     def get_announcements(params = nil)
-      get("/services/v2/#{workroom_check(params)}announcements", params)
+      get("/services/v2/#{workroom_check(params)}announcements.json", params)
     end
 
     def create_announcement(attributes, params = nil)
-      post("/services/v2/#{workroom_check(params)}announcements", attributes)
+      post("/services/v2/#{workroom_check(params)}announcements.json", attributes)
     end
 
     def update_announcement(announcement_id, attributes, params = nil)
-      put("/services/v2/#{workroom_check(params)}announcements/#{announcement_id}", attributes)
+      put("/services/v2/#{workroom_check(params)}announcements/#{announcement_id}.json", attributes)
     end
 
     def get_announcement(announcement_id, params = nil)
-      get("/services/v2/#{workroom_check(params)}announcements/#{announcement_id}")
+      get("/services/v2/#{workroom_check(params)}announcements/#{announcement_id}.json")
     end
 
     def delete_announcement(announcement_id, params = nil)
-      delete("/services/v2/#{workroom_check(params)}announcements/#{announcement_id}")
+      delete("/services/v2/#{workroom_check(params)}announcements/#{announcement_id}.json")
     end
 
     private

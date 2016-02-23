@@ -44,15 +44,15 @@ describe 'BoardEffect::Client' do
 
   describe "create_announcement method" do
     it "posts the given attributes to the announcements resource and returns the decoded response object" do
-      @request = stub_request(:post, "#@base_url/announcements").with(@json_request.merge(body: { title: "Testing api", description: "This is a description"})).to_return(@json_response.merge(status: 201))
-      @client.create_announcement(title: "Testing api", description: "This is a description").must_be_instance_of(BoardEffect::Record)
+      @request = stub_request(:post, "#@base_url/announcements").with(@json_request.merge(body: { title: "Testing api", body: "This is a description"})).to_return(@json_response.merge(status: 201))
+      @client.create_announcement(title: "Testing api", body: "This is a description").must_be_instance_of(BoardEffect::Record)
     end
   end
 
   describe "update_announcement method" do
     it "puts the given attributes to the announcements resource and returns the decoded response object" do
-      @request = stub_request(:put, "#@base_url/announcements/1").with(@json_request.merge(body: { title: "Testing api update", description: "This is a description"})).to_return(@json_response.merge(status: 201))
-      @client.update_announcement(1, {title: "Testing api update", description: "This is a description"}).must_be_instance_of(BoardEffect::Record)
+      @request = stub_request(:put, "#@base_url/announcements/1").with(@json_request.merge(body: { title: "Testing api update", body: "This is a description"})).to_return(@json_response.merge(status: 201))
+      @client.update_announcement(1, {title: "Testing api update", body: "This is a description"}).must_be_instance_of(BoardEffect::Record)
     end
   end
 
