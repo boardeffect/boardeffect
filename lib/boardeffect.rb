@@ -86,6 +86,25 @@ module BoardEffect
     # Books
 
     # Userclasses
+    def get_userclasses(params = nil)
+      get("/services/v2/userclasses.json", params)
+    end
+
+    def create_userclass(attributes, params = nil)
+      post("/services/v2/userclasses.json", attributes)
+    end
+
+    def update_userclass(userclass_id, attributes, params = nil)
+      put("/services/v2/userclasses/#{userclass_id}.json", attributes)
+    end
+
+    def get_userclass(userclass_id, params = nil)
+      get("/services/v2/userclasses/#{userclass_id}.json")
+    end
+
+    def delete_userclass(userclass_id, params = nil)
+      delete("/services/v2/userclasses/#{userclass_id}.json")
+    end
 
     # Users
 

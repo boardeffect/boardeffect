@@ -125,6 +125,44 @@ describe 'BoardEffect::Client' do
       @client.add_invitee(1, {ids: "1,3"}, {workroom_id: 1, event_id: 1}).must_be_instance_of(BoardEffect::Record)
     end
   end
+
+  # Userclasses
+  describe "get_userclasses method" do
+    it "fetches the userclasses resources and returns the decoded response object" do
+      @request = stub_request(:get, "#@base_url/userclasses.json").with(@auth_header).to_return(@json_response.merge(body: '[]'))
+      @client.get_userclasses.must_equal([])
+    end
+  end
+
+  describe "create_userclass method" do
+    it "posts the given attributes to the userclass resource and returns the decoded response object" do
+      attributes = {title: "New Userclass"}
+      @request = stub_request(:post, "#@base_url/userclasses.json").with(@json_request.merge(body: attributes.to_json)).to_return(@json_response.merge(status: 201))
+      @client.create_userclass(attributes).must_be_instance_of(BoardEffect::Record)
+    end
+  end
+
+  describe "update_userclass method" do
+    it "puts the given attributes to the userclass resource and returns the decoded response object" do
+      attributes = { title: "Old Userclass" }
+      @request = stub_request(:put, "#@base_url/userclasses/1.json").with(@json_request.merge(body: attributes.to_json)).to_return(@json_response.merge(status: 201))
+      @client.update_userclass(1, attributes).must_be_instance_of(BoardEffect::Record)
+    end
+  end
+
+  describe "get_userclass method" do
+    it "fetches the userclass resources and returns the decoded response object" do
+      @request = stub_request(:get, "#@base_url/userclasses/1.json").with(@auth_header).to_return(@json_response.merge(body: '[]'))
+      @client.get_userclass(1).must_equal([])
+    end
+  end
+
+  describe "delete_userclass method" do
+    it "deletes the userclass resource" do
+      @request = stub_request(:delete, "#@base_url/userclasses/1.json").with(@auth_header).to_return(status: 204)
+      @client.delete_userclass(1).must_equal(:no_content)
+    end
+  end
 end
 
 describe 'BoardEffect::Record' do
