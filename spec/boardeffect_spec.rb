@@ -88,6 +88,43 @@ describe 'BoardEffect::Client' do
       @client.delete_event(1, workroom_id: 1).must_equal(:no_content)
     end
   end
+
+  # RSVPS
+  describe "get_rsvps method" do
+    it "fetches the rsvps resources and returns the decoded response object" do
+      @request = stub_request(:get, "#@base_url/workrooms/1/events/1/rsvps.json").with(@auth_header).to_return(@json_response.merge(body: '[]'))
+      @client.get_rsvps(workroom_id: 1, event_id: 1).must_equal([])
+    end
+  end
+
+  describe "create_rsvp method" do
+    it "posts the given attributes to the rsvps resource and returns the decoded response object" do
+      attributes = {title: "Testing api", description: "This is a description", location: "Test location", expiration_date: Time.now.to_s}
+      @request = stub_request(:post, "#@base_url/workrooms/1/events/1/rsvps.json").with(@json_request.merge(body: attributes.to_json)).to_return(@json_response.merge(status: 201))
+      @client.create_rsvp(attributes, { workroom_id: 1, event_id: 1}).must_be_instance_of(BoardEffect::Record)
+    end
+  end
+
+  describe "get_rsvp method" do
+    it "fetches the rsvp resource and returns the decoded response object" do
+      @request = stub_request(:get, "#@base_url/workrooms/1/events/1/rsvps/1.json").with(@auth_header).to_return(@json_response.merge(body: '[]'))
+      @client.get_rsvp(1, {workroom_id: 1, event_id: 1}).must_equal([])
+    end
+  end
+
+  describe "add_invitee method" do
+    it "adds an array of user_ids to an rsvp" do
+      @request = stub_request(:post, "#@base_url/workrooms/1/events/1/rsvps/1/add_invitee.json").with(@json_request.merge(body: { ids: "1,2,3"}.to_json)).to_return(@json_response.merge(status: 201))
+      @client.add_invitee(1, {ids: "1,2,3"}, {workroom_id: 1, event_id: 1}).must_be_instance_of(BoardEffect::Record)
+    end
+  end
+
+  describe "remove_invitee method" do
+    it "removes an array of user_ids to an rsvp" do
+      @request = stub_request(:post, "#@base_url/workrooms/1/events/1/rsvps/1/add_invitee.json").with(@json_request.merge(body: { ids: "1,3"}.to_json)).to_return(@json_response.merge(status: 201))
+      @client.add_invitee(1, {ids: "1,3"}, {workroom_id: 1, event_id: 1}).must_be_instance_of(BoardEffect::Record)
+    end
+  end
 end
 
 describe 'BoardEffect::Record' do

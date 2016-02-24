@@ -2,10 +2,10 @@ require 'minitest/autorun'
 require 'webmock/minitest'
 require 'boardeffect'
 
-
 class Module
   include Minitest::Spec::DSL
 end
+
 module BeforeHelper
   before do
     @token = 'd9e982b84b624ab761f718a54f5ab682b0dbf9a11e28ed334812a118eeba34ab2200ec00a923b85eb7c848343aadc601b0386b8ea875f7feb931e2674ceaaf8b'
