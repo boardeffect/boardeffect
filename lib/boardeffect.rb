@@ -6,104 +6,104 @@ module BoardEffect
 
     # Announcements
     def get_announcements(params = nil)
-      get("/services/v2/#{workroom_check(params)}announcements.json", params)
+      get("/#{workroom_check(params)}announcements.json", params)
     end
 
     def create_announcement(attributes, params = nil)
-      post("/services/v2/#{workroom_check(params)}announcements.json", attributes)
+      post("/#{workroom_check(params)}announcements.json", attributes)
     end
 
     def update_announcement(announcement_id, attributes, params = nil)
-      put("/services/v2/#{workroom_check(params)}announcements/#{announcement_id}.json", attributes)
+      put("/#{workroom_check(params)}announcements/#{announcement_id}.json", attributes)
     end
 
     def get_announcement(announcement_id, params = nil)
-      get("/services/v2/#{workroom_check(params)}announcements/#{announcement_id}.json")
+      get("/#{workroom_check(params)}announcements/#{announcement_id}.json")
     end
 
     def delete_announcement(announcement_id, params = nil)
-      delete("/services/v2/#{workroom_check(params)}announcements/#{announcement_id}.json")
+      delete("/#{workroom_check(params)}announcements/#{announcement_id}.json")
     end
 
     # Events
     def get_events(params = nil)
       raise Error, "Workroom ID is required" unless params[:workroom_id].is_a? Numeric
-      get("/services/v2/events.json", params)
+      get("/events.json", params)
     end
 
     def create_event(attributes, params = nil)
       raise Error, "Workroom ID is required" unless params[:workroom_id].is_a? Numeric
-      post("/services/v2/workrooms/#{params[:workroom_id]}/events.json", attributes)
+      post("/workrooms/#{params[:workroom_id]}/events.json", attributes)
     end
 
     def update_event(event_id, attributes, params = nil)
       raise Error, "Workroom ID is required" unless params[:workroom_id].is_a? Numeric
-      put("/services/v2/workrooms/#{params[:workroom_id]}/events/#{event_id}.json", attributes)
+      put("/workrooms/#{params[:workroom_id]}/events/#{event_id}.json", attributes)
     end
 
     def get_event(event_id, params = nil)
       raise Error, "Workroom ID is required" unless params[:workroom_id].is_a? Numeric
-      get("/services/v2/workrooms/#{params[:workroom_id]}/events/#{event_id}.json")
+      get("/workrooms/#{params[:workroom_id]}/events/#{event_id}.json")
     end
 
     def delete_event(event_id, params = nil)
-      delete("/services/v2/workrooms/#{params[:workroom_id]}/events/#{event_id}.json")
+      delete("/workrooms/#{params[:workroom_id]}/events/#{event_id}.json")
     end
 
     # RSVPS
     def get_rsvps(params = nil)
       raise Error, "Workroom ID is required" unless params[:workroom_id].is_a? Numeric
       raise Error, "Event ID is required" unless params[:event_id].is_a? Numeric
-      get("/services/v2/workrooms/#{params[:workroom_id]}/events/#{params[:event_id]}/rsvps.json")
+      get("/workrooms/#{params[:workroom_id]}/events/#{params[:event_id]}/rsvps.json")
     end
 
     def create_rsvp(attributes, params = nil)
       raise Error, "Workroom ID is required" unless params[:workroom_id].is_a? Numeric
       raise Error, "Event ID is required" unless params[:event_id].is_a? Numeric
-      post("/services/v2/workrooms/#{params[:workroom_id]}/events/#{params[:event_id]}/rsvps.json", attributes)
+      post("/workrooms/#{params[:workroom_id]}/events/#{params[:event_id]}/rsvps.json", attributes)
     end
 
     def get_rsvp(rsvp_id, params = nil)
       raise Error, "Workroom ID is required" unless params[:workroom_id].is_a? Numeric
       raise Error, "Event ID is required" unless params[:event_id].is_a? Numeric
       raise Error, "RSVP ID is required" unless rsvp_id.is_a? Numeric
-      get("/services/v2/workrooms/#{params[:workroom_id]}/events/#{params[:event_id]}/rsvps/#{rsvp_id}.json")
+      get("/workrooms/#{params[:workroom_id]}/events/#{params[:event_id]}/rsvps/#{rsvp_id}.json")
     end
 
     def add_invitee(rsvp_id, attributes, params = nil)
       raise Error, "Workroom ID is required" unless params[:workroom_id].is_a? Numeric
       raise Error, "Event ID is required" unless params[:event_id].is_a? Numeric
       raise Error, "RSVP ID is required" unless rsvp_id.is_a? Numeric
-      post("/services/v2/workrooms/#{params[:workroom_id]}/events/#{params[:event_id]}/rsvps/#{rsvp_id}/add_invitee.json", attributes)
+      post("/workrooms/#{params[:workroom_id]}/events/#{params[:event_id]}/rsvps/#{rsvp_id}/add_invitee.json", attributes)
     end
 
     def remove_invitee(rsvp_id, attributes, params = nil)
       raise Error, "Workroom ID is required" unless params[:workroom_id].is_a? Numeric
       raise Error, "Event ID is required" unless params[:event_id].is_a? Numeric
       raise Error, "RSVP ID is required" unless rsvp_id.is_a? Numeric
-      post("/services/v2/workrooms/#{params[:workroom_id]}/events/#{params[:event_id]}/rsvps/#{rsvp_id}/remove_invitee.json", attributes)
+      post("/workrooms/#{params[:workroom_id]}/events/#{params[:event_id]}/rsvps/#{rsvp_id}/remove_invitee.json", attributes)
     end
     # Books
 
     # Userclasses
     def get_userclasses(params = nil)
-      get("/services/v2/userclasses.json", params)
+      get("/userclasses.json", params)
     end
 
     def create_userclass(attributes, params = nil)
-      post("/services/v2/userclasses.json", attributes)
+      post("/userclasses.json", attributes)
     end
 
     def update_userclass(userclass_id, attributes, params = nil)
-      put("/services/v2/userclasses/#{userclass_id}.json", attributes)
+      put("/userclasses/#{userclass_id}.json", attributes)
     end
 
     def get_userclass(userclass_id, params = nil)
-      get("/services/v2/userclasses/#{userclass_id}.json")
+      get("/userclasses/#{userclass_id}.json")
     end
 
     def delete_userclass(userclass_id, params = nil)
-      delete("/services/v2/userclasses/#{userclass_id}.json")
+      delete("/userclasses/#{userclass_id}.json")
     end
 
     # Users

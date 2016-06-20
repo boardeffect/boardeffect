@@ -8,9 +8,9 @@ end
 
 module BeforeHelper
   before do
-    @token = 'd9e982b84b624ab761f718a54f5ab682b0dbf9a11e28ed334812a118eeba34ab2200ec00a923b85eb7c848343aadc601b0386b8ea875f7feb931e2674ceaaf8b'
+    @token = 'b73cbb117c89c9ed9d8009453655e36965bdb1ca491583b22b85c7d499f8a658b1e3fff221fbb2a141880d2be3a466'
 
-    @base_url = 'http://boardeffect.local/services/v2'
+    @base_url = 'http://boardeffect.local'
 
     @entry_id = @project_id = @id = 1234
 

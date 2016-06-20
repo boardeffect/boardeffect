@@ -1,6 +1,6 @@
 # boardeffect
 
-Ruby client for [Version 2 of the BoardEffect API].
+Ruby client for [Version 3 of the BoardEffect API].
 
 
 ## Install
