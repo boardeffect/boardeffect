@@ -43,6 +43,7 @@ module BoardEffect
 
     def get_event(event_id, params = nil)
       raise Error, "Workroom ID is required" unless params[:workroom_id].is_a? Numeric
+      raise Error, "Event ID is required" unless event_id.is_a? Numeric
       get("/workrooms/#{params[:workroom_id]}/events/#{event_id}.json")
     end
 
@@ -83,7 +84,29 @@ module BoardEffect
       raise Error, "RSVP ID is required" unless rsvp_id.is_a? Numeric
       post("/workrooms/#{params[:workroom_id]}/events/#{params[:event_id]}/rsvps/#{rsvp_id}/remove_invitee.json", attributes)
     end
+
     # Books
+    def get_books(params = nil)
+      raise Error, "Workroom ID is required" unless params[:workroom_id].is_a? Numeric
+      get("/books.json", params)
+    end
+
+    def get_paginated_books(params = nil)
+      raise Error, "Workroom ID is required" unless params[:workroom_id].is_a? Numeric
+      get("/books/paginated.json", params)
+    end
+
+    def get_book(book_id, params = nil)
+      raise Error, "Workroom ID is required" unless params[:workroom_id].is_a? Numeric
+      raise Error, "Book ID is required" unless book_id.is_a? Numeric
+      get("/workrooms/#{params[:workroom_id]}/books/#{book_id}.json")
+    end
+
+    # Clients
+    def get_client(client_id)
+      raise Error, "Client ID is required" unless client_id.is_a? Numeric
+      get("/clients/#{client_id}.json")
+    end
 
     # Userclasses
     def get_userclasses(params = nil)

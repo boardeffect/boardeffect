@@ -163,6 +163,33 @@ describe 'BoardEffect::Client' do
       @client.delete_userclass(1).must_equal(:no_content)
     end
   end
+
+  # Books
+  describe "get_books method" do
+    it "fetches the books resources and returns the decoded response object" do
+      @request = stub_request(:get, "#@base_url/books.json?workroom_id=1").with(@auth_header).to_return(@json_response.merge(body: '[]'))
+      @client.get_books(workroom_id: 1).must_equal([])
+    end
+    it "fetches the books resources and returns the decoded response object" do
+      @request = stub_request(:get, "#@base_url/books/paginated.json?workroom_id=1&page=1").with(@auth_header).to_return(@json_response.merge(body: '[]'))
+      @client.get_paginated_books(workroom_id: 1, page: 1).must_equal([])
+    end
+  end
+
+  describe "get_book method" do
+    it "fetches the book resource and returns the decoded response object" do
+      @request = stub_request(:get, "#@base_url/workrooms/1/books/1.json?").with(@auth_header).to_return(@json_response.merge(body: '[]'))
+      @client.get_book(1, workroom_id: 1).must_equal([])
+    end
+  end
+
+  # Clients
+  describe "get_client method" do
+    it "fetches the client resource and returns the decoded response object" do
+      @request = stub_request(:get, "#@base_url/clients/1.json?").with(@auth_header).to_return(@json_response.merge(body: '[]'))
+      @client.get_client(1).must_equal([])
+    end
+  end
 end
 
 describe 'BoardEffect::Record' do
