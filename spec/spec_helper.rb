@@ -14,9 +14,9 @@ module BeforeHelper
 
     @entry_id = @project_id = @id = 1234
 
-    @auth_header = {headers: {'Authorization' => "Token token=#{@token}", 'User-Agent'=>'Ruby BoardEffect::Client', 'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3'}}
+    @auth_header = {headers: {'Authorization' => "Bearer #{@token}", 'User-Agent'=>'Ruby BoardEffect::Client', 'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3'}}
 
-    @json_request = {headers: {'Authorization' => "Token token=#{@token}", 'User-Agent'=>'Ruby BoardEffect::Client', 'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3'}}
+    @json_request = {headers: {'Authorization' => "Bearer #{@token}", 'User-Agent'=>'Ruby BoardEffect::Client', 'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3'}}
 
     @json_response = {headers: {'Content-Type' => 'application/json;charset=utf-8'}, body: '{}'}
 

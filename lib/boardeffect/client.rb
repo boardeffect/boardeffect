@@ -8,7 +8,7 @@ module BoardEffect
   class Client
     def initialize(options = {})
       if options.key?(:access_token)
-        @auth_header, @auth_value = 'Authorization', "Token token=#{options[:access_token]}"
+        @auth_header, @auth_value = 'Authorization', "Bearer #{options[:access_token]}"
       else
         @auth_header, @auth_value = 'X-BoardEffectToken', options.fetch(:token)
       end
