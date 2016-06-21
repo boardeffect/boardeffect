@@ -36,19 +36,21 @@ module BoardEffect
       post("/workrooms/#{params[:workroom_id]}/events.json", attributes)
     end
 
-    def update_event(event_id, attributes, params = nil)
+    def update_event(id, attributes, params = nil)
       raise Error, "Workroom ID is required" unless params[:workroom_id].is_a? Numeric
-      put("/workrooms/#{params[:workroom_id]}/events/#{event_id}.json", attributes)
+      raise Error, "Event ID is required" unless id.is_a? Numeric
+      put("/workrooms/#{params[:workroom_id]}/events/#{id}.json", attributes)
     end
 
-    def get_event(event_id, params = nil)
+    def get_event(id, params = nil)
       raise Error, "Workroom ID is required" unless params[:workroom_id].is_a? Numeric
-      raise Error, "Event ID is required" unless event_id.is_a? Numeric
-      get("/workrooms/#{params[:workroom_id]}/events/#{event_id}.json")
+      raise Error, "Event ID is required" unless id.is_a? Numeric
+      get("/workrooms/#{params[:workroom_id]}/events/#{id}.json")
     end
 
-    def delete_event(event_id, params = nil)
-      delete("/workrooms/#{params[:workroom_id]}/events/#{event_id}.json")
+    def delete_event(id, params = nil)
+      raise Error, "Event ID is required" unless id.is_a? Numeric
+      delete("/workrooms/#{params[:workroom_id]}/events/#{id}.json")
     end
 
     # RSVPS
@@ -108,6 +110,60 @@ module BoardEffect
       get("/clients/#{client_id}.json")
     end
 
+    # Custom Fields
+    def get_custom_fields(params = nil)
+      get("/custom_fields.json")
+    end
+
+    # Discussions
+    def get_discussions(params = nil)
+      raise Error, "Workroom ID is required" unless params[:workroom_id].is_a? Numeric
+      get("/workrooms/#{params[:workroom_id]}/discussions.json")
+    end
+
+    def get_discussion(discussion_id, params = nil)
+      raise Error, "Workroom ID is required" unless params[:workroom_id].is_a? Numeric
+      get("/workrooms/#{params[:workroom_id]}/discussions/#{discussion_id}.json")
+    end
+
+    # Discussion Posts
+    def get_discussion_post(discussion_id, post_id, params = nil)
+      raise Error, "Workroom ID is required" unless params[:workroom_id].is_a? Numeric
+      raise Error, "Discussion ID is required" unless discussion_id.is_a? Numeric
+      raise Error, "Discussion Post ID is required" unless post_id.is_a? Numeric
+      get("/workrooms/#{params[:workroom_id]}/discussions/#{discussion_id}/discussion_posts/#{post_id}.json")
+    end
+
+    # Event Categories
+    def get_event_categories(params = nil)
+      get("/eventcolors.json", params)
+    end
+
+    def create_event_category(attributes, params = nil)
+      post("/eventcolors.json", attributes)
+    end
+
+    def update_event_category(id, attributes, params = nil)
+      raise Error, "Eventcolor ID is required" unless id.is_a? Numeric
+      put("/eventcolors/#{id}.json", attributes)
+    end
+
+    def get_event_category(id, params = nil)
+      raise Error, "Eventcolor ID is required" unless id.is_a? Numeric
+      get("/eventcolors/#{id}.json")
+    end
+
+    def delete_event_category(id, params = nil)
+      raise Error, "Eventcolor ID is required" unless id.is_a? Numeric
+      delete("/eventcolors/#{id}.json")
+    end
+
+    # Surveys
+    def get_surveys(params = nil)
+      raise Error, "Workroom ID is required" unless params[:workroom_id].is_a? Numeric
+      get("/workrooms/#{params[:workroom_id]}/surveys.json")
+    end
+
     # Userclasses
     def get_userclasses(params = nil)
       get("/userclasses.json", params)
@@ -118,22 +174,63 @@ module BoardEffect
     end
 
     def update_userclass(userclass_id, attributes, params = nil)
+      raise Error, "Userclass ID is required" unless userclass_id.is_a? Numeric
       put("/userclasses/#{userclass_id}.json", attributes)
     end
 
     def get_userclass(userclass_id, params = nil)
+      raise Error, "Userclass ID is required" unless userclass_id.is_a? Numeric
       get("/userclasses/#{userclass_id}.json")
     end
 
     def delete_userclass(userclass_id, params = nil)
+      raise Error, "Userclass ID is required" unless userclass_id.is_a? Numeric
       delete("/userclasses/#{userclass_id}.json")
     end
 
     # Users
+    def get_users
+      get("/users.json")
+    end
+
+    def get_user(id)
+      raise Error, "User ID is required" unless id.is_a? Numeric
+      get("/users/#{id}.json")
+    end
+
+    # Workgroups
+    def get_workgroups
+      get("/committeegroups.json")
+    end
+
+    def get_workgroup(id)
+      raise Error, "Workgroup ID is required" unless id.is_a? Numeric
+      get("/committeegroups/#{id}.json")
+    end
 
     # Workrooms
+    def get_workrooms(params = nil)
+      get("/workrooms.json")
+    end
 
+    def create_workroom(attributes, params = nil)
+      post("/workrooms.json", attributes)
+    end
 
+    def update_workroom(id, attributes, params = nil)
+      raise Error, "Workroom ID is required" unless id.is_a? Numeric
+      put("/workrooms/#{id}.json", attributes)
+    end
+
+    def get_workroom(id, params = nil)
+      raise Error, "Workroom ID is required" unless id.is_a? Numeric
+      get("/workrooms/#{id}.json")
+    end
+
+    def delete_workroom(id, params = nil)
+      raise Error, "Workroom ID is required" unless id.is_a? Numeric
+      delete("/workrooms/#{id}.json")
+    end
 
     private
 

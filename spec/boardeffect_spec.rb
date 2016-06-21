@@ -190,6 +190,153 @@ describe 'BoardEffect::Client' do
       @client.get_client(1).must_equal([])
     end
   end
+
+  # Custom Fields
+  describe "get_custom_fields method" do
+    it "fetches the custom fields resource and returns the decoded response object" do
+      attributes = { "id" => 0, "label" => "string", "field_type" => "string", "options" => "string"}
+      @request = stub_request(:get, "#@base_url/custom_fields.json?").with(@auth_header).to_return(@json_response.merge(body: attributes.to_json))
+      @client.get_custom_fields.must_be_instance_of(BoardEffect::Record)
+    end
+  end
+
+  # Discussions
+  describe "get_discussions method" do
+    it "fetches the discussions resource and returns the decoded response object" do
+      @request = stub_request(:get, "#@base_url/workrooms/1/discussions.json").with(@auth_header).to_return(@json_response.merge(body: '[]'))
+      @client.get_discussions(workroom_id: 1).must_equal([])
+    end
+  end
+
+  describe "get_discussion method" do
+    it "fetches the discussion resource and returns the decoded response object" do
+      @request = stub_request(:get, "#@base_url/workrooms/1/discussions/1.json").with(@auth_header).to_return(@json_response.merge(body: '[]'))
+      @client.get_discussion(1, workroom_id: 1).must_equal([])
+    end
+  end
+
+  # Discussion Posts
+  describe "get_discussion_post" do
+    it "fetches the discussion post resource and returns the decoded response object" do
+      @request = stub_request(:get, "#@base_url/workrooms/1/discussions/1/discussion_posts/1.json").with(@auth_header).to_return(@json_response.merge(body: '[]'))
+      @client.get_discussion_post(1, 1, workroom_id: 1).must_equal([])
+    end
+  end
+
+  # Event Categories
+  describe "get_event_categories" do
+    it "fetches the event category resource and returns the decoded response object" do
+      @request = stub_request(:get, "#@base_url/eventcolors.json").with(@auth_header).to_return(@json_response.merge(body: '[]'))
+      @client.get_event_categories().must_equal([])
+    end
+  end
+
+  describe "create_event_category" do
+    it "creates the event category resource and returns the decoded response object" do
+      attributes = {title: "New Event Category", color: 'FFFF00'}
+      @request = stub_request(:post, "#@base_url/eventcolors.json").with(@json_request.merge(body: attributes.to_json)).to_return(@json_response.merge(status: 201))
+      @client.create_event_category(attributes).must_be_instance_of(BoardEffect::Record)
+    end
+  end
+
+  describe "update_event_category" do
+    it "updates the event category resource and returns the decoded response object" do
+      attributes = {title: "Updated Event Category", color: 'FFFFCC'}
+      @request = stub_request(:put, "#@base_url/eventcolors/1.json").with(@json_request.merge(body: attributes.to_json)).to_return(@json_response.merge(status: 201))
+      @client.update_event_category(1, attributes).must_be_instance_of(BoardEffect::Record)
+    end
+  end
+
+  describe "get_event_category" do
+    it "fetches the event category resource and returns the decoded response object" do
+      @request = stub_request(:get, "#@base_url/eventcolors/1.json").with(@auth_header).to_return(@json_response.merge(body: '[]'))
+      @client.get_event_category(1).must_equal([])
+    end
+  end
+
+  describe "delete_event_category" do
+    it "fetches the event category resource and returns the decoded response object" do
+      @request = stub_request(:delete, "#@base_url/eventcolors/1.json").with(@auth_header).to_return(@json_response.merge(body: '[]'))
+      @client.delete_event_category(1).must_equal([])
+    end
+  end
+
+  # Surveys
+  describe "get_surveys" do
+    it "fetches the survey resource and returns the decoded response object" do
+      @request = stub_request(:get, "#@base_url/workrooms/1/surveys.json").with(@auth_header).to_return(@json_response.merge(body: '[]'))
+      @client.get_surveys(workroom_id: 1).must_equal([])
+    end
+  end
+
+  # Users
+  describe "get_users" do
+    it "fetches the users resource and returns the decoded response object" do
+      @request = stub_request(:get, "#@base_url/users.json").with(@auth_header).to_return(@json_response.merge(body: '[]'))
+      @client.get_users.must_equal([])
+    end
+  end
+
+  describe "get_user" do
+    it "fetches the user resource and returns the decoded response object" do
+      @request = stub_request(:get, "#@base_url/users/1.json").with(@auth_header).to_return(@json_response.merge(body: '[]'))
+      @client.get_user(1).must_equal([])
+    end
+  end
+
+  # Workgroups
+  describe "get_workgroups" do
+    it "fetches the workgroups resource and returns the decoded response object" do
+      @request = stub_request(:get, "#@base_url/committeegroups.json").with(@auth_header).to_return(@json_response.merge(body: '[]'))
+      @client.get_workgroups.must_equal([])
+    end
+  end
+
+  describe "get_workgroup" do
+    it "fetches the workgroup resource and returns the decoded response object" do
+      @request = stub_request(:get, "#@base_url/committeegroups/1.json").with(@auth_header).to_return(@json_response.merge(body: '[]'))
+      @client.get_workgroup(1).must_equal([])
+    end
+  end
+
+  # Workrooms
+  describe "get_workrooms method" do
+    it "fetches the workrooms resources and returns the decoded response object" do
+      @request = stub_request(:get, "#@base_url/workrooms.json").with(@auth_header).to_return(@json_response.merge(body: '[]'))
+      @client.get_workrooms.must_equal([])
+    end
+  end
+
+  describe "create_workroom method" do
+    it "posts the given attributes to the workroom resource and returns the decoded response object" do
+      attributes = {name: "New Workroom"}
+      @request = stub_request(:post, "#@base_url/workrooms.json").with(@json_request.merge(body: attributes.to_json)).to_return(@json_response.merge(status: 201))
+      @client.create_workroom(attributes).must_be_instance_of(BoardEffect::Record)
+    end
+  end
+
+  describe "update_workroom method" do
+    it "puts the given attributes to the workroom resource and returns the decoded response object" do
+      attributes = { name: "Updated Workroom" }
+      @request = stub_request(:put, "#@base_url/workrooms/1.json").with(@json_request.merge(body: attributes.to_json)).to_return(@json_response.merge(status: 201))
+      @client.update_workroom(1, attributes).must_be_instance_of(BoardEffect::Record)
+    end
+  end
+
+  describe "get_workroom method" do
+    it "fetches the workroom resources and returns the decoded response object" do
+      @request = stub_request(:get, "#@base_url/workrooms/1.json").with(@auth_header).to_return(@json_response.merge(body: '[]'))
+      @client.get_workroom(1).must_equal([])
+    end
+  end
+
+  describe "delete_workroom method" do
+    it "deletes the workroom resource" do
+      @request = stub_request(:delete, "#@base_url/workrooms/1.json").with(@auth_header).to_return(status: 204)
+      @client.delete_workroom(1).must_equal(:no_content)
+    end
+  end
+
 end
 
 describe 'BoardEffect::Record' do
