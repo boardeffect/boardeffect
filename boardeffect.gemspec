@@ -4,8 +4,8 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'boardeffect/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "boardeffect"
-  spec.version       = BoardEffect::VERSION
+  spec.name             = "boardeffect"
+  spec.version          = BoardEffect::VERSION
   spec.authors          = ['Mark Hunt']
   spec.email            = ['development@boardeffect.com']
   spec.homepage         = 'https://github.com/magicmarkker/boardeffect'
