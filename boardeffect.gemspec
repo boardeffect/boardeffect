@@ -9,8 +9,8 @@ Gem::Specification.new do |spec|
   spec.authors          = ['Mark Hunt']
   spec.email            = ['development@boardeffect.com']
   spec.homepage         = 'https://github.com/magicmarkker/boardeffect'
-  spec.description      = 'Ruby client for Version 2 of the BoardEffect API'
-  spec.summary          = 'Ruby client for Version 2 of the BoardEffect API'
+  spec.description      = 'Ruby client for Version 3 of the BoardEffect API'
+  spec.summary          = 'Ruby client for Version 3 of the BoardEffect API'
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
