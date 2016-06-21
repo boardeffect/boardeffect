@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    boardeffect (0.0.1)
+    boardeffect (1.0.0)
 
 GEM
   remote: https://rubygems.org/
@@ -26,3 +26,6 @@ DEPENDENCIES
   minitest (~> 5.0)
   rake (~> 10.4)
   webmock (~> 1.24)
+
+BUNDLED WITH
+   1.11.2
