@@ -15,7 +15,7 @@ $ gem install boardeffect
 ```ruby
 require 'boardeffect'
 
-boardeffect = BoardEffect::Client.new(access_token: 'YOUR PERSONAL ACCESS TOKEN', host: 'https://yourportalname.boardeffect.com/')
+boardeffect = BoardEffect::Client.new(access_token: 'API KEY', host: 'https://yourportalname.boardeffect.com/')
 
 announcement = boardeffect.create_announcement({title: "This is a test from the console", body: "This is a body description"}, { workroom_id: 2 })
 p announcement.inspect
