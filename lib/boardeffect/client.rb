@@ -5,21 +5,31 @@ require 'cgi'
 require 'json'
 
 module BoardEffect
+
   class Client
+
+    API_VERSION = 3
+    API_PATH    = '/api/v3'
+
     def initialize(options = {})
-      if options.key?(:access_token)
-        @auth_header, @auth_value = 'Authorization', "Bearer #{options[:access_token]}"
+      setup_client(options)
+      if !options.key?(:test)
+        auth = auth("#{API_PATH}/auth/api_key.json", { api_key: options[:access_token]})
+        if auth[:success] == true
+          @auth_header, @auth_value = 'Authorization', "Bearer #{auth[:data][:token]}"
+        else
+          raise Error, auth[:error][:message]
+        end
       else
-        @auth_header, @auth_value = 'X-BoardEffectToken', options.fetch(:token)
+         @auth_header, @auth_value = 'Authorization', "Bearer #{options[:access_token]}"
       end
+    end
 
-      @user_agent = options.fetch(:user_agent, 'Ruby BoardEffect::Client')
-
-      @host = (options.key?(:host)) ? options[:host] : 'boardeffect.local'
-
-      @http = Net::HTTP.new(@host)
-
-      @http.use_ssl = (options.key?(:host)) ? true : false
+    def auth(path, attributes)
+      http_request = Net::HTTP::Post.new(path)
+      http_request['Content-Type'] = 'application/json'
+      http_request.body = JSON.generate(attributes)
+      parse(@http.request(http_request))
     end
 
     def get(path, params = nil)
@@ -28,16 +38,25 @@ module BoardEffect
 
     private
 
+    def setup_client(options = {})
+      @user_agent = options.fetch(:user_agent, 'Ruby BoardEffect::Client')
+
+      @host = (options.key?(:host)) ? options[:host] : 'boardeffect.local'
+
+      @http = Net::HTTP.new(URI.parse(@host).host, Net::HTTP.https_default_port())
+      @http.use_ssl = true
+    end
+
     def post(path, attributes)
-      request(Net::HTTP::Post.new(path), attributes)
+      request(Net::HTTP::Post.new(request_uri(path)), attributes)
     end
 
     def put(path, attributes = nil)
-      request(Net::HTTP::Put.new(path), attributes)
+      request(Net::HTTP::Put.new(request_uri(path)), attributes)
     end
 
     def delete(path)
-      request(Net::HTTP::Delete.new(path))
+      request(Net::HTTP::Delete.new(request_uri(path)))
     end
 
     def request(http_request, body_object = nil)
@@ -70,15 +89,16 @@ module BoardEffect
       when Net::HTTPBadRequest
         object = JSON.parse(http_response.body, symbolize_names: true)
 
-        raise Error, "boardeffect api error: #{object.fetch(:message)}"
+        raise Error, "boardeffect api error: #{object[:error][:message]}"
       when Net::HTTPUnauthorized
-        raise AuthenticationError
+        raise AuthenticationError, "boardeffect api error: unexpected #{http_response.code} response from #{@host}"
       else
         raise Error, "boardeffect api error: unexpected #{http_response.code} response from #{@host}"
       end
     end
 
     def request_uri(path, params = nil)
+      path = API_PATH + path unless path.include? API_PATH
       return path if params.nil? || params.empty?
 
       path + '?' + params.map { |k, v| "#{escape(k)}=#{array_escape(v)}" }.join('&')

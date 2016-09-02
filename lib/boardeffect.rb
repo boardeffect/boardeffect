@@ -27,81 +27,65 @@ module BoardEffect
 
     # Events
     def get_events(params = nil)
-      raise Error, "Workroom ID is required" unless params[:workroom_id].is_a? Numeric
-      get("/events.json", params)
+      get("/#{workroom_check(params)}events.json", params)
     end
 
     def create_event(attributes, params = nil)
-      raise Error, "Workroom ID is required" unless params[:workroom_id].is_a? Numeric
-      post("/workrooms/#{params[:workroom_id]}/events.json", attributes)
+      post("/#{workroom_check(params)}events.json", attributes)
     end
 
     def update_event(id, attributes, params = nil)
-      raise Error, "Workroom ID is required" unless params[:workroom_id].is_a? Numeric
       raise Error, "Event ID is required" unless id.is_a? Numeric
-      put("/workrooms/#{params[:workroom_id]}/events/#{id}.json", attributes)
+      put("/#{workroom_check(params)}events/#{id}.json", attributes)
     end
 
     def get_event(id, params = nil)
-      raise Error, "Workroom ID is required" unless params[:workroom_id].is_a? Numeric
       raise Error, "Event ID is required" unless id.is_a? Numeric
-      get("/workrooms/#{params[:workroom_id]}/events/#{id}.json")
+      get("/#{workroom_check(params)}events/#{id}.json")
     end
 
     def delete_event(id, params = nil)
       raise Error, "Event ID is required" unless id.is_a? Numeric
-      delete("/workrooms/#{params[:workroom_id]}/events/#{id}.json")
+      delete("/#{workroom_check(params)}events/#{id}.json")
     end
 
     # RSVPS
     def get_rsvps(params = nil)
-      raise Error, "Workroom ID is required" unless params[:workroom_id].is_a? Numeric
       raise Error, "Event ID is required" unless params[:event_id].is_a? Numeric
-      get("/workrooms/#{params[:workroom_id]}/events/#{params[:event_id]}/rsvps.json")
+      get("/#{workroom_check(params)}events/#{params[:event_id]}/rsvps.json")
     end
 
     def create_rsvp(attributes, params = nil)
-      raise Error, "Workroom ID is required" unless params[:workroom_id].is_a? Numeric
       raise Error, "Event ID is required" unless params[:event_id].is_a? Numeric
-      post("/workrooms/#{params[:workroom_id]}/events/#{params[:event_id]}/rsvps.json", attributes)
+      post("/#{workroom_check(params)}events/#{params[:event_id]}/rsvps.json", attributes)
     end
 
     def get_rsvp(rsvp_id, params = nil)
-      raise Error, "Workroom ID is required" unless params[:workroom_id].is_a? Numeric
       raise Error, "Event ID is required" unless params[:event_id].is_a? Numeric
       raise Error, "RSVP ID is required" unless rsvp_id.is_a? Numeric
-      get("/workrooms/#{params[:workroom_id]}/events/#{params[:event_id]}/rsvps/#{rsvp_id}.json")
+      get("/#{workroom_check(params)}events/#{params[:event_id]}/rsvps/#{rsvp_id}.json")
     end
 
     def add_invitee(rsvp_id, attributes, params = nil)
-      raise Error, "Workroom ID is required" unless params[:workroom_id].is_a? Numeric
       raise Error, "Event ID is required" unless params[:event_id].is_a? Numeric
       raise Error, "RSVP ID is required" unless rsvp_id.is_a? Numeric
-      post("/workrooms/#{params[:workroom_id]}/events/#{params[:event_id]}/rsvps/#{rsvp_id}/add_invitee.json", attributes)
+      post("/#{workroom_check(params)}events/#{params[:event_id]}/rsvps/#{rsvp_id}/add_invitee.json", attributes)
     end
 
     def remove_invitee(rsvp_id, attributes, params = nil)
-      raise Error, "Workroom ID is required" unless params[:workroom_id].is_a? Numeric
       raise Error, "Event ID is required" unless params[:event_id].is_a? Numeric
       raise Error, "RSVP ID is required" unless rsvp_id.is_a? Numeric
-      post("/workrooms/#{params[:workroom_id]}/events/#{params[:event_id]}/rsvps/#{rsvp_id}/remove_invitee.json", attributes)
+      post("/#{workroom_check(params)}events/#{params[:event_id]}/rsvps/#{rsvp_id}/remove_invitee.json", attributes)
     end
 
     # Books
     def get_books(params = nil)
-      raise Error, "Workroom ID is required" unless params[:workroom_id].is_a? Numeric
-      get("/books.json", params)
-    end
-
-    def get_paginated_books(params = nil)
-      raise Error, "Workroom ID is required" unless params[:workroom_id].is_a? Numeric
-      get("/books/paginated.json", params)
+      get("/#{workroom_check(params)}books.json", params)
     end
 
     def get_book(book_id, params = nil)
-      raise Error, "Workroom ID is required" unless params[:workroom_id].is_a? Numeric
       raise Error, "Book ID is required" unless book_id.is_a? Numeric
-      get("/workrooms/#{params[:workroom_id]}/books/#{book_id}.json")
+      get("/#{workroom_check(params)}books/#{book_id}.json")
     end
 
     # Clients
@@ -117,21 +101,18 @@ module BoardEffect
 
     # Discussions
     def get_discussions(params = nil)
-      raise Error, "Workroom ID is required" unless params[:workroom_id].is_a? Numeric
-      get("/workrooms/#{params[:workroom_id]}/discussions.json")
+      get("/#{workroom_check(params)}discussions.json")
     end
 
     def get_discussion(discussion_id, params = nil)
-      raise Error, "Workroom ID is required" unless params[:workroom_id].is_a? Numeric
-      get("/workrooms/#{params[:workroom_id]}/discussions/#{discussion_id}.json")
+      get("/#{workroom_check(params)}discussions/#{discussion_id}.json")
     end
 
     # Discussion Posts
     def get_discussion_post(discussion_id, post_id, params = nil)
-      raise Error, "Workroom ID is required" unless params[:workroom_id].is_a? Numeric
       raise Error, "Discussion ID is required" unless discussion_id.is_a? Numeric
       raise Error, "Discussion Post ID is required" unless post_id.is_a? Numeric
-      get("/workrooms/#{params[:workroom_id]}/discussions/#{discussion_id}/discussion_posts/#{post_id}.json")
+      get("/#{workroom_check(params)}discussions/#{discussion_id}/discussion_posts/#{post_id}.json")
     end
 
     # Event Categories
@@ -160,8 +141,7 @@ module BoardEffect
 
     # Surveys
     def get_surveys(params = nil)
-      raise Error, "Workroom ID is required" unless params[:workroom_id].is_a? Numeric
-      get("/workrooms/#{params[:workroom_id]}/surveys.json")
+      get("/#{workroom_check(params)}surveys.json")
     end
 
     # Userclasses
@@ -235,7 +215,8 @@ module BoardEffect
     private
 
     def workroom_check(params = nil)
-      if !params.nil? && params.key?('workroom_id')
+      if !params.nil? && (params.key?('workroom_id') or params.key?(:workroom_id))
+        raise Error, "Workroom ID is required" unless params[:workroom_id].is_a? Numeric
         raise Error, "Workroom ID Can not be 0" if params[:workroom_id].to_i == 0
         "workrooms/#{params[:workroom_id].to_i}/"
       end
