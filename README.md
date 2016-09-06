@@ -1,4 +1,4 @@
-# boardeffect
+# BoardEffect
 
 Ruby client for [Version 3 of the BoardEffect API].
 
