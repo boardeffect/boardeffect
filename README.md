@@ -19,8 +19,6 @@ gem 'boardeffect'
 ```
 
 and run `bundle install` to install the dependency.
-```
-
 
 ## Overview ##
 
