@@ -1,7 +1,11 @@
 # BoardEffect
+<a href="http://boardeffect.com"><img src="http://www.boardeffect.com/wp-content/uploads/2015/10/BE.png" alt="BoardEffect" width="250"></a>
 
 Ruby client for [Version 3 of the BoardEffect API].
 
+## Supported Ruby Versions
+
+Ruby 1.9.3 or greater
 
 ## Installation ##
 
@@ -39,3 +43,15 @@ p announcement.inspect
 events = boardeffect.get_events(workroom_id: 2 )
 p events[:data].inspect
 ```
+
+## Support
+
+Bug reports and feature requests should be filed on the [GitHub issue tracking page](https://github.com/magicmarkker/boardeffect/issues). 
+
+## Contributing
+
+1. Fork it
+2. Create your feature branch (`git checkout -b my-new-feature`)
+3. Commit your changes (`git commit -am 'Add some feature'`)
+4. Push to the branch (`git push origin my-new-feature`)
+5. Create new pull request
