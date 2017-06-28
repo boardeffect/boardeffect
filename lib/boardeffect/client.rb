@@ -28,6 +28,7 @@ module BoardEffect
     def auth(path, attributes)
       http_request = Net::HTTP::Post.new(path)
       http_request['Content-Type'] = 'application/json'
+      http_request['Host'] = @platform if @platform
       http_request.body = JSON.generate(attributes)
       parse(@http.request(http_request))
     end
@@ -42,6 +43,8 @@ module BoardEffect
       @user_agent = options.fetch(:user_agent, 'Ruby BoardEffect::Client')
 
       @host = (options.key?(:host)) ? options[:host] : 'boardeffect.local'
+
+      @platform = options[:platform] if options.key?(:platform)
 
       @http = Net::HTTP.new(URI.parse(@host).host, Net::HTTP.https_default_port())
       @http.use_ssl = true
@@ -62,6 +65,7 @@ module BoardEffect
     def request(http_request, body_object = nil)
       http_request['User-Agent'] = @user_agent
       http_request[@auth_header] = @auth_value
+      http_request['Host'] = @platform if @platform
 
       if body_object
         http_request['Content-Type'] = 'application/json'
