@@ -6,9 +6,9 @@ require 'boardeffect/version'
 Gem::Specification.new do |spec|
   spec.name             = "boardeffect"
   spec.version          = BoardEffect::VERSION
-  spec.authors          = ['Mark Hunt']
+  spec.authors          = ['Development']
   spec.email            = ['development@boardeffect.com']
-  spec.homepage         = 'https://github.com/magicmarkker/boardeffect'
+  spec.homepage         = 'https://github.com/boardeffect/boardeffect'
   spec.description      = 'Ruby client for Version 3 of the BoardEffect API'
   spec.summary          = 'Ruby client for Version 3 of the BoardEffect API'
   spec.license       = "MIT"
