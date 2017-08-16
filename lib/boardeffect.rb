@@ -169,13 +169,27 @@ module BoardEffect
     end
 
     # Users
-    def get_users
-      get("/users.json")
+    def get_users(params = nil)
+      get("/users.json", params)
     end
 
     def get_user(id)
       raise Error, "User ID is required" unless id.is_a? Numeric
       get("/users/#{id}.json")
+    end
+
+    def create_user(attributes)
+      post("/users.json", attributes)
+    end
+
+    def update_user(id, attributes)
+      raise Error, "User ID is required" unless id.is_a? Numeric
+      put("/users/#{id}.json", attributes)
+    end
+
+    def delete_user(id, params = nil)
+      raise Error, "User ID is required" unless id.is_a? Numeric
+      delete("/users/#{id}.json")
     end
 
     # Workgroups
@@ -210,6 +224,10 @@ module BoardEffect
     def delete_workroom(id, params = nil)
       raise Error, "Workroom ID is required" unless id.is_a? Numeric
       delete("/workrooms/#{id}.json")
+    end
+
+    def get_auth_login(params)
+      get("/auth/login.json", params)
     end
 
     private
